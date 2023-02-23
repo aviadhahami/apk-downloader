@@ -169,25 +169,32 @@ def main():
     # TODO: replace app_name with actual app name
     output_file = "output/" + package_id + ".apk"
 
-    r = requests.get(download_link, allow_redirects=True, stream=True)
-    with open(output_file, 'wb') as f:
-        total_length = int(r.headers.get('content-length'))
-        bar = make_progress_bar()
-        bar.start(total_length)
-        dl = 0
-        for chunk in r.iter_content(chunk_size=1024):
-            if chunk:
-                dl += len(chunk)
-                f.write(chunk)
-                bar.update(dl)
-        bar.finish()
-    print('%sAPK Downloaded %s' %
-          (fg('green'), attr('reset')))
+    try:
 
-    print('%sAPK DOWNLOADED : App saved to output/app.apk %s' %
-          (fg('green'), attr('reset')))
+        
+        r = requests.get(download_link, allow_redirects=True, stream=True)
+        with open(output_file, 'wb') as f:
+            total_length = int(r.headers.get('content-length'))
+            bar = make_progress_bar()
+            bar.start(total_length)
+            dl = 0
+            for chunk in r.iter_content(chunk_size=1024):
+                if chunk:
+                    dl += len(chunk)
+                    f.write(chunk)
+                    bar.update(dl)
+            bar.finish()
+        print('%sAPK Downloaded %s' %
+            (fg('green'), attr('reset')))
 
-    exit()
+        print('%sAPK DOWNLOADED : App saved to output/app.apk %s' %
+            (fg('green'), attr('reset')))
+
+        exit()
+    except Exception as e:
+        print(e)
+        exit(1)
+    
 
 
 main()
