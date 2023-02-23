@@ -167,7 +167,7 @@ def main():
           (fg('yellow'), attr('reset')))
 
     # TODO: replace app_name with actual app name
-    output_file = "output/" + "app_name" + ".apk"
+    output_file = "output/" + package_id + ".apk"
 
     r = requests.get(download_link, allow_redirects=True, stream=True)
     with open(output_file, 'wb') as f:
